@@ -51,7 +51,7 @@ public class JWTService {
     private Key getKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretkey);
         return Keys.hmacShaKeyFor(keyBytes);
-}
+    }
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -80,5 +80,5 @@ public class JWTService {
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
-    }
+}
 }
