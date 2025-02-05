@@ -23,6 +23,7 @@ public class MovieEntity extends BaseEntity {
         private BigDecimal rating;
         private Date releaseDate;
         private Timestamp createdAt;
+        private String cloudLink;
 
         // Getters and Setters
     }
