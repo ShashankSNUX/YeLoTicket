@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [movie, setMovie] = useState(null); // State for movie details
+  const [movie, setMovie] = useState(null); 
 
   useEffect(() => {
     if (token) {
