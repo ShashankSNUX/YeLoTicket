@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -20,10 +22,12 @@ public class MovieEntity extends BaseEntity {
         private Integer duration;
         private String language;
         private String genre;
-        private BigDecimal rating;
+        private Double rating;
         private Date releaseDate;
         private Timestamp createdAt;
         private String cloudLink;
+        @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL)
+        private List<ShowEntity> shows = new ArrayList<>();
 
         // Getters and Setters
     }

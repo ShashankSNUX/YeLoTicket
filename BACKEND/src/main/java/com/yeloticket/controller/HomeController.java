@@ -33,17 +33,11 @@ public class HomeController {
     public ResponseEntity<SignUpRespDto> userRegistration(@RequestBody SignUpReqDto reqDto) {
 
         UserEntity user = mapper.map(reqDto, UserEntity.class);
-        user.setRole(UserRole.USER);
+        user.setRole(UserRole.ADMIN);
         SignUpRespDto response = new SignUpRespDto(userService.registerUser(user));
         return ResponseEntity.status(HttpStatus.OK).body(response);
 }
-//    @PostMapping("/sign-in")
-//    public ResponseEntity<SignInReqDto> login (@RequestBody SignInReqDto reqDto){
-//        UserEntity user = mapper.map(reqDto, UserEntity.class);
-//        user.setRole(UserRole.USER);
-//        SignUpRespDto response = new SignUpRespDto(userService.registerUser(user));
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
+
 @PostMapping("/login")
 public String login(@RequestBody SignInReqDto user) {
     return userService.verify(user.getUsername(),user.getPassword());

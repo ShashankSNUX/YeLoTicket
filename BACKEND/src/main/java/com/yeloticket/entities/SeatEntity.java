@@ -15,7 +15,7 @@ public class SeatEntity extends BaseEntity{
 
         @ManyToOne
         @JoinColumn(name = "screen_id")
-        private ScreenEntity screen;
+        private ShowEntity screen;
 
         private String seatNumber;
         private String seatType;

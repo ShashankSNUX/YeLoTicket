@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TheatreRepository extends JpaRepository<TheatreEntity, Long> {
 
+    TheatreEntity findByName(String name);
 }

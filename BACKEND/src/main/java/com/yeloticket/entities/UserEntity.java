@@ -3,11 +3,12 @@ package com.yeloticket.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -25,4 +26,8 @@ public class UserEntity extends BaseEntity {
     private UserRole role;
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdOn = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<TicketEntity> ticketList = new ArrayList<>();
 }

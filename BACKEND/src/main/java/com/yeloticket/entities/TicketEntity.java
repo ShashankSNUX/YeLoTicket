@@ -3,9 +3,11 @@ package com.yeloticket.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.security.Timestamp;
+import java.sql.Date;
 
 @Entity
 @Table(name = "tickets")
@@ -14,21 +16,20 @@ import java.security.Timestamp;
 @NoArgsConstructor
 public class TicketEntity extends BaseEntity{
 
-        @ManyToOne
-        @JoinColumn(name = "screening_id")
-        private ScreeeningEntity screening;
+        private Integer totalTicketsPrice;
+
+        private String bookedSeats;
+
+        @CreationTimestamp
+        private Date bookedAt;
 
         @ManyToOne
-        @JoinColumn(name = "user_id")
+        @JoinColumn
+        private ShowEntity show;
+
+        @ManyToOne
+        @JoinColumn
         private UserEntity user;
 
-        @ManyToOne
-        @JoinColumn(name = "seat_id")
-        private SeatEntity seat;
-
-        private Timestamp bookingTime;
-        private String status;
-
-        // Getters and Setters
     }
 

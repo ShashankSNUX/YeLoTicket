@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "theatres")
 @Data
@@ -13,9 +16,10 @@ import javax.persistence.*;
 public class TheatreEntity extends BaseEntity{
         private String name;
         private String location;
-        private Integer totalScreens;
-       // private Timestamp createdAt;
+    @OneToMany(mappedBy = "theatre", cascade = CascadeType.ALL)
+    private List<TheatreSeatEntity> theaterSeatList = new ArrayList<>();
 
-        // Getters and Setters
+    @OneToMany(mappedBy = "theatre", cascade = CascadeType.ALL)
+    private List<ShowEntity> showList = new ArrayList<>();
     }
 
