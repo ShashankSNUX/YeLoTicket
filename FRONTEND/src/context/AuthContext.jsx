@@ -7,7 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [movie, setMovie] = useState(null); 
+  const [movie, setMovie] = useState(null);
+  const [movies, setMovies] = useState([]); 
 
   useEffect(() => {
     if (token) {
@@ -63,8 +64,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchAllMovies = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/movies/all`);
+      setMovies(response.data);
+      setSuccess("Movies fetched successfully!");
+      setError("");
+    } catch (error) {
+      setError(error.response?.data?.message || "Failed to fetch all movies.");
+      setSuccess("");
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ token, login, signup, logout, error, success, movie, fetchMovieDetails }}>
+    <AuthContext.Provider value={{ token, login, signup, logout, error, success, movie,movies, fetchMovieDetails, fetchAllMovies }}>
       {children}
     </AuthContext.Provider>
   );

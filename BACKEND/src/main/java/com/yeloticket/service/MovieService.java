@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,5 +34,9 @@ public class MovieService {
         movie.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         movieRepository.save(movie);
         return "The movie has been added successfully";
+    }
+
+    public List<MovieEntity> getMovies() {
+        return movieRepository.findAll();
     }
 }

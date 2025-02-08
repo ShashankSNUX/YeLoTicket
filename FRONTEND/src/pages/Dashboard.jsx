@@ -1,4 +1,6 @@
 import React from "react";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Typography, Box, Grid, Card, CardMedia } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
@@ -33,6 +35,15 @@ const musicStudio = [
 ];
 
 const Dashboard = () => {
+  const { movies, fetchAllMovies, error } = useAuth();
+
+    useEffect(() => {
+      fetchAllMovies();
+    }, []);
+
+    if (error) return <Typography variant="h4" color="error">{error}</Typography>;
+
+
   return (
     <Container maxWidth="lg">
       {/* Carousel Section */}
@@ -94,6 +105,21 @@ const Dashboard = () => {
             <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
               <Card sx={{ borderRadius: "10px", overflow: "hidden" }}>
                 <CardMedia component="img" height="250" image={movie.image} alt={movie.title} />
+              </Card>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
+      {/* Movies fetched from database*/}
+      <Typography variant="h5" sx={{ marginTop: 4, marginBottom: 2 }}>
+        Movies from Databse
+      </Typography>
+      <Grid container spacing={2}>
+        {movies.map((movie) => (
+          <Grid item xs={6} sm={4} md={2.4} key={movie.id}>
+            <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
+              <Card sx={{ borderRadius: "10px", overflow: "hidden" }}>
+                <CardMedia component="img" height="250" image={movie.cloudLink} alt={movie.title} />
               </Card>
             </Link>
           </Grid>
