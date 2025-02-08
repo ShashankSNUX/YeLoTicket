@@ -12,6 +12,7 @@ import com.yeloticket.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -29,20 +30,25 @@ public class BookingService {
     @Autowired
     private UserRepository userRepository;
 
-    public BookingResponseDto ticketBooking(BookingRequestDto bookingRequest) throws Exception {
+    @Autowired
+    private JWTService jwtService;
+
+    public BookingResponseDto ticketBooking(BookingRequestDto bookingRequest, HttpServletRequest request) throws Exception {
+        String authHeader = request.getHeader("Authorization");
+        String token = authHeader.split(" ")[1].trim();
+        String username = jwtService.extractUserName(token);
         Optional<ShowEntity> showOpt = showRepository.findById(bookingRequest.getShowId());
 
         if (showOpt.isEmpty()) {
             throw new Exception("Show does not exist");
         }
 
-        Optional<UserEntity> userOpt = userRepository.findById(bookingRequest.getUserId());
+        UserEntity user = userRepository.findByUsername(username);
 
-        if (userOpt.isEmpty()) {
+        if (user == null) {
             throw new Exception("User does not exist");
         }
 
-        UserEntity user = userOpt.get();
         ShowEntity show = showOpt.get();
 
         Boolean isSeatAvailable = isSeatAvailable(show.getShowSeatList(), bookingRequest.getRequestSeats());
@@ -51,7 +57,8 @@ public class BookingService {
             throw new Exception("Seats are not available");
         }
 
-        // count price
+        updateSeatAvailability(show.getShowSeatList(), bookingRequest.getRequestSeats());
+
         Integer getPriceAndAssignSeats = getPriceAndAssignSeats(show.getShowSeatList(),	bookingRequest.getRequestSeats());
 
         String seats = listToString(bookingRequest.getRequestSeats());
@@ -114,5 +121,13 @@ public class BookingService {
         }
 
         return sb.toString();
+    }
+
+    private void updateSeatAvailability(List<ShowSeatEntity> showSeatList, List<String> requestSeats) {
+        for (ShowSeatEntity showSeat : showSeatList) {
+            if (requestSeats.contains(showSeat.getSeatNo())) {
+                showSeat.setIsAvailable(false);
+            }
+        }
     }
 }

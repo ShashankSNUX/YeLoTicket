@@ -1,5 +1,6 @@
 package com.yeloticket.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,9 @@ public class MovieEntity extends BaseEntity {
         private Date releaseDate;
         private Timestamp createdAt;
         private String cloudLink;
+
         @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL)
+        @JsonIgnore
         private List<ShowEntity> shows = new ArrayList<>();
 
         // Getters and Setters

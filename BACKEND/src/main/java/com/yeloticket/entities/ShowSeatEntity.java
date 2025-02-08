@@ -1,5 +1,6 @@
 package com.yeloticket.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,6 @@ public class ShowSeatEntity extends BaseEntity{
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     private ShowEntity show;
 }

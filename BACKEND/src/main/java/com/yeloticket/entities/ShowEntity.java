@@ -1,5 +1,6 @@
 package com.yeloticket.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,9 +31,11 @@ public class ShowEntity extends BaseEntity{
         private TheatreEntity theatre;
 
         @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+        @JsonIgnore
         private List<ShowSeatEntity> showSeatList = new ArrayList<>();
 
         @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+        @JsonIgnore
         private List<TicketEntity> ticketList = new ArrayList<>();
 
     }

@@ -11,6 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class BookingRequestDto {
     private Long showId;
-    private Long userId;
     private List<String> requestSeats;
 }

@@ -7,7 +7,6 @@ import com.yeloticket.repository.MovieRepository;
 import com.yeloticket.repository.ShowRepository;
 import com.yeloticket.repository.TheatreRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,5 +96,13 @@ public class ShowService {
         theaterRepository.save(theater);
 
         return "Show has been added Successfully";
+    }
+
+    public List<ShowEntity> getAll(Long id) {
+        return showRepository.findAllByTheatreId(id);
+    }
+
+    public List<ShowSeatEntity> getById(Long id) {
+        return showRepository.findById(id).get().getShowSeatList();
     }
 }
