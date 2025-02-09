@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Typography, Card, CardContent, Button } from "@mui/material";
 
@@ -7,18 +7,23 @@ const Ticket = () => {
   const navigate = useNavigate();
   const { showId, seats } = location.state || {};
 
-  // Retrieve the logged-in user's name (assuming it's stored in localStorage)
-  const username = localStorage.getItem("username") || "Guest";
+  // State to store the username
+  const [username, setUsername] = useState("Guest");
+
+  // Fetch username from localStorage when component mounts
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   // Function to calculate total price based on seat category
   const calculatePrice = (seat) => {
-    const row = parseInt(seat.match(/\d+/)?.[0], 10); // Extract row number
-    if (row >= 1 && row <= 5) {
-      return 350; // Seats from 1A to 5J cost ₹350
-    } else if (row >= 6 && row <= 10) {
-      return 500; // Seats from 6A to 10J cost ₹500
-    }
-    return 200; // Default price (if needed)
+    const row = parseInt(seat.match(/\d+/)?.[0], 10);
+    if (row >= 1 && row <= 5) return 350;
+    if (row >= 6 && row <= 10) return 500;
+    return 200;
   };
 
   const totalPrice = seats?.reduce((sum, seat) => sum + calculatePrice(seat), 0) || 0;

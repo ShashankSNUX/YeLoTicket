@@ -46,10 +46,24 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setToken("");
-    localStorage.removeItem("jwt");
+    localStorage.clear(); // Clears all local storage items
+    sessionStorage.clear(); // Clears session storage as well
     delete axios.defaults.headers.common["Authorization"];
+    
+    // Clear Razorpay cookies if needed
+    document.cookie = "rzp_checkout_anon_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "rzp_device_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "rzp_stored_checkout_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    
     setSuccess("Logged out successfully.");
-  };
+    
+    // Redirect user if needed
+    navigate("/login"); 
+    
+    // Optionally refresh the page
+    window.location.reload();
+};
+
 
   // 🆕 Fetch movie details by ID
   const fetchMovieDetails = async (movieId) => {
