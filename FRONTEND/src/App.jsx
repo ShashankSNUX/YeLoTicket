@@ -12,6 +12,7 @@ import About from "./pages/About"
 import Booking from "./pages/Booking"
 import Payment from "./pages/Payment"
 import Ticket from "./pages/Ticket"
+import AdminPanel from "./pages/AdminPanel" // Import Admin Panel
 import theme from "./components/Theme" // Import the dark theme we created earlier
 
 const App = () => {
@@ -32,8 +33,8 @@ const App = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                minHeight: "calc(100vh - 64px)", // Subtract the height of the Navbar
-                py: 4, // Add some padding to the top and bottom
+                minHeight: "calc(100vh - 64px)", // Adjusting for Navbar height
+                py: 4,
               }}
             >
               <Box width="100%">
@@ -78,6 +79,14 @@ const App = () => {
                     element={
                       <ProtectedRoute>
                         <Ticket />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin-panel"
+                    element={
+                      <ProtectedRoute>
+                        <AdminPanel />
                       </ProtectedRoute>
                     }
                   />

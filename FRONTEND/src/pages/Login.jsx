@@ -22,6 +22,7 @@ const Login = () => {
     try {
       await login(formData.username, formData.password)
       localStorage.setItem("username", formData.username);
+
       setSuccess("Login successful! Redirecting...")
       setError("")
       setTimeout(() => navigate("/dashboard"), 1500)

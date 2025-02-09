@@ -1,6 +1,7 @@
 package com.yeloticket.controller;
 
 import com.yeloticket.dtos.SignInReqDto;
+import com.yeloticket.dtos.SignInRespDto;
 import com.yeloticket.dtos.SignUpReqDto;
 import com.yeloticket.dtos.SignUpRespDto;
 import com.yeloticket.entities.UserEntity;
@@ -33,13 +34,17 @@ public class HomeController {
     public ResponseEntity<SignUpRespDto> userRegistration(@RequestBody SignUpReqDto reqDto) {
 
         UserEntity user = mapper.map(reqDto, UserEntity.class);
-        user.setRole(UserRole.ADMIN);
+        user.setRole(UserRole.USER);
         SignUpRespDto response = new SignUpRespDto(userService.registerUser(user));
         return ResponseEntity.status(HttpStatus.OK).body(response);
 }
 
 @PostMapping("/login")
-public String login(@RequestBody SignInReqDto user) {
-    return userService.verify(user.getUsername(),user.getPassword());
+public SignInRespDto login(@RequestBody SignInReqDto user) {
+    UserEntity user1 = userService.findByUsername(user.getUsername());
+        SignInRespDto signInRespDto = new SignInRespDto();
+        signInRespDto.setToken(userService.verify(user.getUsername(),user.getPassword()));
+        signInRespDto.setRole(user1.getRole());
+        return signInRespDto;
     }
 }

@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
+  const [role, setRole] = useState(localStorage.getItem("role") || "");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [movie, setMovie] = useState(null);
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       localStorage.setItem("jwt", token);
+      localStorage.setItem("role", role);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       localStorage.removeItem("jwt");
@@ -25,6 +27,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post("http://localhost:8080/home/login", { username, password });
       const receivedToken = response.data.token || response.data;
       setToken(receivedToken);
+      setRole(response.data.role);
       setSuccess("Login successful!");
       setError("");
     } catch (error) {
