@@ -30,11 +30,11 @@ public class ShowEntity extends BaseEntity{
         @JoinColumn(name = "theatre_id")
         private TheatreEntity theatre;
 
-        @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "show", cascade = CascadeType.ALL ,orphanRemoval = true)
         @JsonIgnore
         private List<ShowSeatEntity> showSeatList = new ArrayList<>();
 
-        @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "show", cascade = CascadeType.ALL,orphanRemoval = true)
         @JsonIgnore
         private List<TicketEntity> ticketList = new ArrayList<>();
 

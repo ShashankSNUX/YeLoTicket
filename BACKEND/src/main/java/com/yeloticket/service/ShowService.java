@@ -105,4 +105,40 @@ public class ShowService {
     public List<ShowSeatEntity> getById(Long id) {
         return showRepository.findById(id).get().getShowSeatList();
     }
+
+    public String deleteShow(Long showId) throws Exception {
+        Optional<ShowEntity> showOpt = showRepository.findById(showId);
+
+        if (showOpt.isEmpty()) {
+            throw new Exception("Show does not exist");
+        }
+
+        ShowEntity show = showOpt.get();
+
+        // Remove the show seats associated with this show
+        List<ShowSeatEntity> showSeats = show.getShowSeatList();
+        if (!showSeats.isEmpty()) {
+            showSeats.clear(); // Clearing the list to remove associations
+        }
+
+        // Remove the show from related movie and theatre entities
+        MovieEntity movie = show.getMovie();
+        TheatreEntity theatre = show.getTheatre();
+
+        if (movie != null) {
+            movie.getShows().remove(show);
+            movieRepository.save(movie);
+        }
+
+        if (theatre != null) {
+            theatre.getShowList().remove(show);
+            theaterRepository.save(theatre);
+        }
+
+        // Delete the show
+        showRepository.delete(show);
+
+        return "Show and its associated seats have been deleted successfully";
+    }
+
 }

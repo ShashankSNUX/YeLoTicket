@@ -36,9 +36,22 @@ const AdminPanel = () => {
     setActiveTab(newValue);
   };
 
-  const handleSubmit = async (endpoint, data) => {
+  // const handleSubmit = async (endpoint, data) => {
+  //   try {
+  //     const response = await axios.post(`http://localhost:8080/admin/${endpoint}`, data);
+  //     alert(response.data);
+  //   } catch (error) {
+  //     alert(error.response?.data || "Something went wrong.");
+  //   }
+  // };
+  const handleSubmit = async (endpoint, data, method = "POST") => {
     try {
-      const response = await axios.post(`http://localhost:8080/admin/${endpoint}`, data);
+      let response;
+      if (method === "DELETE") {
+        response = await axios.delete(`http://localhost:8080/admin/${endpoint}/${data}`);
+      } else {
+        response = await axios.post(`http://localhost:8080/admin/${endpoint}`, data);
+      }
       alert(response.data);
     } catch (error) {
       alert(error.response?.data || "Something went wrong.");
@@ -57,6 +70,7 @@ const AdminPanel = () => {
         <Tab label="Add Show" />
         <Tab label="Add Theatre Seats" />
         <Tab label="Associate Show Seats" />
+        <Tab label="Delete Show" />
       </Tabs>
 
       <Box sx={{ mt: 3 }}>
@@ -121,6 +135,24 @@ const AdminPanel = () => {
             <TextField fullWidth label="Classic Seat Price" name="priceOfClassicSeat" onChange={handleChange} sx={{ mb: 2 }} />
             <Button variant="contained" color="primary" onClick={() => handleSubmit("associateSeats", formData)}>
               Associate Show Seats
+            </Button>
+          </Box>
+        )}
+        {activeTab === 5 && (
+          <Box>
+            <TextField
+              fullWidth
+              label="Show ID to Delete"
+              name="deleteShowId"
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => handleSubmit("deleteShow", formData.deleteShowId, "DELETE")}
+            >
+              Delete Show
             </Button>
           </Box>
         )}

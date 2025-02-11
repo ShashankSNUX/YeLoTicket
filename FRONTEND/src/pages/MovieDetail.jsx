@@ -16,13 +16,27 @@ const MovieDetail = () => {
   if (!movie) return <Typography variant="h4">Loading...</Typography>;
 
   return (
-    <Container maxWidth="md">
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        textAlign: "center",
+      }}
+    >
       {/* Display Movie Poster */}
-      <Box sx={{ display: "flex", justifyContent: "center", marginBottom: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <img
           src={movie.cloudLink}
           alt={movie.title}
-          style={{ width: "100%", maxWidth: "400px", borderRadius: "10px" }}
+          style={{
+            width: "auto",
+            maxWidth: "90vw",
+            maxHeight: "80vh",
+            borderRadius: "10px",
+          }}
         />
       </Box>
 

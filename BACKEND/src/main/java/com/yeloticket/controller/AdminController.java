@@ -69,4 +69,16 @@ public class AdminController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @DeleteMapping("/deleteShow/{id}")
+    public ResponseEntity<String> deleteShow(@PathVariable Long id) {
+        try {
+            String result = showService.deleteShow(id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

@@ -23,18 +23,23 @@ const App = () => {
         <Router>
           <Box
             sx={{
-              minHeight: "100vh",
+              width: "100vw",
+              minHeight: "100vh", // Allows content to expand dynamically
               background: "linear-gradient(45deg, #121212 30%, #2C2C2C 90%)",
+              overflow: "auto", // Prevents content from going out of the screen
             }}
           >
             <Navbar />
             <Container
-              maxWidth="md"
               sx={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                minHeight: "calc(100vh - 64px)", // Adjusting for Navbar height
+                justifyContent: "center",
+                minHeight: "calc(100vh - 64px)", // Adjust based on Navbar height
+                width: "100%",
                 py: 4,
+                overflow: "hidden", // Prevents unexpected overflow
               }}
             >
               <Box width="100%">
@@ -98,7 +103,8 @@ const App = () => {
         </Router>
       </ThemeProvider>
     </AuthProvider>
-  )
-}
+  );
+};
+
 
 export default App

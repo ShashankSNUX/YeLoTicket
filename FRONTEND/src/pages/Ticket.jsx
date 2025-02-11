@@ -30,7 +30,7 @@ const Ticket = () => {
     const doc = new jsPDF();
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
-    doc.text("🎟 YeLo Ticket 🎟", 70, 20);
+    doc.text(" YeLo Ticket ", 70, 20);
     
     doc.setFontSize(14);
     doc.text(`User: ${username}`, 20, 40);

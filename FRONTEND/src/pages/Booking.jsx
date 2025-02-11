@@ -179,28 +179,42 @@ const Booking = () => {
         </FormControl>
       )}
 
-      {selectedShow && (
-        <>
-          <Box>
-            <Typography variant="h4" gutterBottom>
-              Select Your Seats
-              <h6>Classic seats - 1A to 5J</h6>
-              <h6>Premium seats - 6A to 10J</h6>
-            </Typography>
-            <Grid container>
-              {seats.map(seat => (
-                <Grid item key={seat.seatNo}>
-                  <Seat seat={seat} />
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
+{selectedShow && (
+  <>
+    <Box sx={{ textAlign: "center", mb: 3 }}>
+      <Typography variant="h4">Select Your Seats</Typography>
+      <Typography variant="h6">🎟 Classic seats: 1A to 5J</Typography>
+      <Typography variant="h6">⭐ Premium seats: 6A to 10J</Typography>
+    </Box>
 
-          <Button variant="contained" color="success" fullWidth onClick={handleBooking} style={{ marginTop: 20 }}>
-            Book Now
-          </Button>
-        </>
-      )}
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Grid 
+        container 
+        spacing={1} 
+        sx={{ 
+          maxWidth: "80vw", 
+          justifyContent: "center" 
+        }}
+      >
+        {seats.map(seat => (
+          <Grid item key={seat.seatNo} xs={1}>
+            <Seat seat={seat} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+
+    <Button 
+      variant="contained" 
+      color="success" 
+      fullWidth 
+      onClick={handleBooking} 
+      sx={{ marginTop: 3 }}
+    >
+      Book Now
+    </Button>
+  </>
+)}
     </Container>
   );
 };
